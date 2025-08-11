@@ -1,0 +1,209 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: system-ui, sans-serif;
+  }
+  
+  body {
+    @apply text-gray-900 bg-gray-50;
+  }
+}
+
+@layer components {
+  /* Enhanced Gold Card */
+  .gold-card {
+    @apply bg-gradient-to-br from-yellow-50 via-yellow-100 to-yellow-50 border border-yellow-200 rounded-xl p-8 shadow-lg relative overflow-hidden;
+  }
+  
+  .gold-card::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-yellow-400/5 to-yellow-600/5;
+  }
+  
+  .gold-price {
+    @apply text-4xl font-bold text-yellow-600 tracking-tight;
+  }
+  
+  .price-change-positive {
+    @apply text-green-600 font-medium;
+  }
+  
+  .price-change-negative {
+    @apply text-red-600 font-medium;
+  }
+  
+  /* Enhanced Sidebar */
+  .sidebar {
+    @apply bg-white rounded-xl shadow-sm border border-gray-200 p-6 sticky top-8;
+  }
+  
+  .sidebar-link {
+    @apply block px-4 py-3 text-gray-700 hover:bg-yellow-50 hover:text-yellow-800 rounded-lg transition-all duration-200 font-medium;
+  }
+  
+  .sidebar-link.active {
+    @apply bg-yellow-100 text-yellow-800 font-semibold border-l-4 border-yellow-500;
+  }
+
+  /* Enhanced Sidebar Gold Rate Styles */
+  .sidebar-goldrate {
+    @apply w-full bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-xl p-6 shadow-sm text-base border border-yellow-200;
+  }
+
+  .sidebar-section-title {
+    @apply font-bold text-gray-900 mb-4 text-lg border-b border-gray-200 pb-2;
+  }
+
+  .sidebar-list {
+    @apply list-none p-0 m-0 space-y-2;
+  }
+
+  .sidebar-list li {
+    @apply mb-0;
+  }
+
+  .sidebar-list .sidebar-link {
+    @apply text-blue-700 no-underline transition-all duration-200 hover:text-blue-900 hover:bg-blue-50 rounded-lg px-3 py-2;
+  }
+
+  /* Enhanced Chart container styles */
+  .chart-container {
+    @apply bg-white rounded-xl shadow-md p-6 border border-gray-200 hover:shadow-lg transition-shadow duration-200;
+  }
+
+  /* Enhanced FAQ styles */
+  .faq-section {
+    @apply my-8;
+  }
+
+  .faq-item {
+    @apply mb-6 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden;
+  }
+
+  .faq-question {
+    @apply p-6 bg-gray-50 border-b border-gray-200 font-semibold text-gray-900 cursor-pointer hover:bg-gray-100 transition-colors duration-200;
+  }
+
+  .faq-answer {
+    @apply p-6 text-gray-700 leading-relaxed;
+  }
+
+  /* Enhanced Table styles */
+  .price-table {
+    @apply min-w-full border-collapse bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200;
+  }
+
+  .price-table th {
+    @apply bg-gradient-to-r from-yellow-600 to-yellow-700 text-white border-b border-yellow-800 px-6 py-4 text-left font-semibold;
+  }
+
+  .price-table td {
+    @apply border-b border-gray-200 px-6 py-4 text-gray-700;
+  }
+
+  .price-table tr:nth-child(even) {
+    @apply bg-gray-50;
+  }
+
+  .price-table tr:nth-child(odd) {
+    @apply bg-white;
+  }
+
+  .price-table tr:hover {
+    @apply bg-yellow-50 transition-colors duration-150;
+  }
+
+  /* Enhanced Calculator Styles */
+  .calculator-input {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200;
+  }
+
+  .calculator-button {
+    @apply w-full bg-gradient-to-r from-yellow-600 to-yellow-700 text-white py-3 px-6 rounded-lg hover:from-yellow-700 hover:to-yellow-800 transition-all duration-200 font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5;
+  }
+
+  /* Enhanced Card Styles */
+  .info-card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200;
+  }
+
+  .stats-card {
+    @apply bg-white rounded-lg shadow-sm p-4 border border-gray-200 hover:shadow-md transition-shadow duration-200;
+  }
+
+  /* Enhanced Button Styles */
+  .btn-primary {
+    @apply bg-gradient-to-r from-yellow-600 to-yellow-700 text-white px-6 py-3 rounded-lg hover:from-yellow-700 hover:to-yellow-800 transition-all duration-200 font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-100 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-200 transition-all duration-200 font-medium;
+  }
+
+  /* Enhanced Navigation */
+  .breadcrumb {
+    @apply flex items-center space-x-2 text-sm text-gray-500;
+  }
+
+  .breadcrumb a {
+    @apply hover:text-yellow-600 transition-colors duration-200;
+  }
+
+  .breadcrumb span {
+    @apply text-gray-400;
+  }
+
+  /* Enhanced Loading States */
+  .loading-skeleton {
+    @apply animate-pulse bg-gray-200 rounded;
+  }
+
+  /* Enhanced Responsive Design */
+  @media (max-width: 768px) {
+    .gold-price {
+      @apply text-2xl;
+    }
+    
+    .gold-card {
+      @apply p-6;
+    }
+    
+    .sidebar {
+      @apply p-4;
+    }
+  }
+
+  /* Enhanced Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  /* Enhanced Focus States */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2;
+  }
+
+  /* Enhanced Typography */
+  .text-gradient {
+    @apply bg-gradient-to-r from-yellow-600 to-yellow-700 bg-clip-text text-transparent;
+  }
+
+  /* Enhanced Shadows */
+  .shadow-gold {
+    box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.1), 0 10px 10px -5px rgba(245, 158, 11, 0.04);
+  }
+} 
