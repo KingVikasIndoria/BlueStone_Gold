@@ -1,52 +1,812 @@
 [
   {
+    "date": "2025-05-31",
+    "timestamp": "2025-08-26T16:03:32.413698",
+    "22k": 9000.0,
+    "24k": 9450.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-06-01",
+    "timestamp": "2025-08-26T16:03:32.015244",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-06-02",
+    "timestamp": "2025-08-26T16:03:31.629813",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-06-03",
+    "timestamp": "2025-08-26T16:03:31.247753",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-06-04",
+    "timestamp": "2025-08-26T16:03:30.864281",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-06-05",
+    "timestamp": "2025-08-26T16:03:30.454756",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-06-06",
+    "timestamp": "2025-08-26T16:03:30.060794",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-06-07",
+    "timestamp": "2025-08-26T16:03:29.636756",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-06-08",
+    "timestamp": "2025-08-26T16:03:29.125104",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-06-09",
+    "timestamp": "2025-08-26T16:03:28.740135",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-06-10",
+    "timestamp": "2025-08-26T16:03:28.351757",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-06-11",
+    "timestamp": "2025-08-26T16:03:27.955000",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-06-12",
+    "timestamp": "2025-08-26T16:03:27.557499",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-06-13",
+    "timestamp": "2025-08-26T16:03:27.171195",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-06-14",
+    "timestamp": "2025-08-26T16:03:26.693364",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
     "date": "2025-06-15",
-    "price_22k": 9188.36,
-    "price_24k": 9666.04
+    "timestamp": "2025-08-26T16:03:26.200669",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
   },
   {
     "date": "2025-06-16",
-    "price_22k": 9117.09,
-    "price_24k": 9848.95
+    "timestamp": "2025-08-26T16:03:25.814938",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
   },
   {
     "date": "2025-06-17",
-    "price_22k": 9080.98,
-    "price_24k": 9546.83
+    "timestamp": "2025-08-26T16:03:25.423387",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
   },
   {
     "date": "2025-06-18",
-    "price_22k": 9065.84,
-    "price_24k": 9842.22
+    "timestamp": "2025-08-26T16:03:25.022327",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
   },
   {
     "date": "2025-06-19",
-    "price_22k": 9254.64,
-    "price_24k": 9565.91
+    "timestamp": "2025-08-26T16:03:24.611471",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
   },
   {
     "date": "2025-06-20",
-    "price_22k": 9333.36,
-    "price_24k": 9757.81
+    "timestamp": "2025-08-26T16:03:24.219439",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
   },
   {
     "date": "2025-06-21",
-    "price_22k": 9417.14,
-    "price_24k": 9659.91
+    "timestamp": "2025-08-26T16:03:23.827283",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
   },
   {
     "date": "2025-06-22",
-    "price_22k": 9109.96,
-    "price_24k": 9774.61
+    "timestamp": "2025-08-26T16:03:23.419820",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
   },
   {
     "date": "2025-06-23",
-    "price_22k": 9162.75,
-    "price_24k": 9720.35
+    "timestamp": "2025-08-26T16:03:22.951819",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
   },
   {
     "date": "2025-06-24",
-    "price_22k": 9235.0,
-    "price_24k": 9697.0
+    "timestamp": "2025-08-26T16:03:22.445404",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-06-25",
+    "timestamp": "2025-08-26T16:03:21.199522",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-06-26",
+    "timestamp": "2025-08-26T16:03:19.529111",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-06-27",
+    "timestamp": "2025-08-26T16:03:19.127873",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-06-28",
+    "timestamp": "2025-08-26T16:03:18.727653",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-06-29",
+    "timestamp": "2025-08-26T16:03:18.331819",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-06-30",
+    "timestamp": "2025-08-26T16:03:17.941912",
+    "22k": 8995.0,
+    "24k": 9445.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-01",
+    "timestamp": "2025-08-26T16:03:17.441933",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-02",
+    "timestamp": "2025-08-26T16:03:17.042042",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-03",
+    "timestamp": "2025-08-26T16:03:16.574957",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-04",
+    "timestamp": "2025-08-26T16:03:16.180102",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-05",
+    "timestamp": "2025-08-26T16:03:15.787605",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-06",
+    "timestamp": "2025-08-26T16:03:15.407673",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-07",
+    "timestamp": "2025-08-26T16:03:15.020143",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-08",
+    "timestamp": "2025-08-26T16:03:13.142584",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-09",
+    "timestamp": "2025-08-26T16:03:11.386407",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-10",
+    "timestamp": "2025-08-26T16:03:10.991916",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-11",
+    "timestamp": "2025-08-26T16:03:10.502806",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-12",
+    "timestamp": "2025-08-26T16:03:09.924503",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-13",
+    "timestamp": "2025-08-26T16:03:09.515060",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-14",
+    "timestamp": "2025-08-26T16:03:09.139307",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-15",
+    "timestamp": "2025-08-26T16:03:08.735849",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-16",
+    "timestamp": "2025-08-26T16:03:08.355686",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-17",
+    "timestamp": "2025-08-26T16:03:07.957838",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-18",
+    "timestamp": "2025-08-26T16:03:06.959480",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-19",
+    "timestamp": "2025-08-26T16:03:05.161888",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-20",
+    "timestamp": "2025-08-26T16:03:04.782989",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-21",
+    "timestamp": "2025-08-26T16:03:04.377979",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-22",
+    "timestamp": "2025-08-26T16:03:03.982267",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-23",
+    "timestamp": "2025-08-26T16:03:03.478419",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-24",
+    "timestamp": "2025-08-26T16:03:03.075815",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-25",
+    "timestamp": "2025-08-26T16:03:02.669091",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-26",
+    "timestamp": "2025-08-26T16:03:00.956809",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-27",
+    "timestamp": "2025-08-26T16:03:00.565433",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-28",
+    "timestamp": "2025-08-26T16:03:00.183633",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-29",
+    "timestamp": "2025-08-26T16:02:59.786329",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-30",
+    "timestamp": "2025-08-26T16:02:59.400176",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-07-31",
+    "timestamp": "2025-08-26T16:02:58.999256",
+    "22k": 9240.0,
+    "24k": 9702.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-01",
+    "timestamp": "2025-08-26T16:02:58.491252",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-02",
+    "timestamp": "2025-08-26T16:02:58.112093",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-03",
+    "timestamp": "2025-08-26T16:02:57.708614",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-04",
+    "timestamp": "2025-08-26T16:02:57.313079",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-05",
+    "timestamp": "2025-08-26T16:02:56.897892",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-06",
+    "timestamp": "2025-08-26T16:02:56.455462",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-07",
+    "timestamp": "2025-08-26T16:02:55.852045",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-08",
+    "timestamp": "2025-08-26T16:02:55.437182",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-09",
+    "timestamp": "2025-08-26T16:02:55.032785",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-10",
+    "timestamp": "2025-08-26T16:02:54.567875",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-11",
+    "timestamp": "2025-08-26T16:02:54.155356",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-12",
+    "timestamp": "2025-08-26T16:02:53.728161",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-13",
+    "timestamp": "2025-08-26T16:02:53.293748",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-14",
+    "timestamp": "2025-08-26T16:02:52.845339",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-15",
+    "timestamp": "2025-08-26T16:02:52.341746",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-16",
+    "timestamp": "2025-08-26T16:02:51.954849",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-17",
+    "timestamp": "2025-08-26T16:02:51.464146",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-18",
+    "timestamp": "2025-08-26T16:02:51.082470",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-19",
+    "timestamp": "2025-08-26T16:02:50.679451",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-20",
+    "timestamp": "2025-08-26T16:02:50.273787",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-21",
+    "timestamp": "2025-08-26T16:02:49.861612",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-22",
+    "timestamp": "2025-08-26T16:02:49.490920",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-23",
+    "timestamp": "2025-08-26T16:02:49.086550",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-24",
+    "timestamp": "2025-08-26T16:02:48.661726",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-25",
+    "timestamp": "2025-08-26T16:02:48.269430",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-26",
+    "timestamp": "2025-08-26T16:02:47.873015",
+    "22k": 9420.0,
+    "24k": 9891.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-08-29",
+    "timestamp": "2025-08-29T16:09:52.857457",
+    "22k": 9535.0,
+    "24k": 10012.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
+  },
+  {
+    "date": "2025-09-01",
+    "timestamp": "2025-09-01T17:10:20.201640",
+    "22k": 9770.0,
+    "24k": 10259.0,
+    "currency": "INR",
+    "unit": "1 Gram",
+    "status_code": 200
   }
 ]

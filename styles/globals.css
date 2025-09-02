@@ -10,6 +10,13 @@
   body {
     @apply text-gray-900 bg-gray-50;
   }
+
+  /* Global rectangle inputs (override any rounded classes) */
+  input,
+  select,
+  textarea {
+    border-radius: 0 !important;
+  }
 }
 
 @layer components {

@@ -28,30 +28,30 @@ function formatINR(n: number) {
 const TempHistoricalMonthlyTable: React.FC = () => {
   return (
     <>
-      <h3 className="text-blue-900 font-bold text-lg mb-3">Historical Gold Rate in Bangalore</h3>
+      <h3 className="text-blue-900 font-bold text-sm lg:text-lg mb-2 lg:mb-3">Historical Gold Rate in Bangalore</h3>
       <div className="overflow-x-auto overflow-y-auto max-h-80">
-        <table className="min-w-full text-sm border border-blue-100 rounded-lg">
+        <table className="min-w-full text-xs lg:text-sm border border-blue-100 rounded-lg">
           <thead>
             <tr className="bg-blue-50">
-              <th className="px-4 py-2 text-left text-blue-900 font-semibold">Month</th>
-              <th className="px-4 py-2 text-center text-blue-900 font-semibold">Lowest 18K<br/>Per 10g</th>
-              <th className="px-4 py-2 text-center text-blue-900 font-semibold">Highest 18K<br/>Per 10g</th>
-              <th className="px-4 py-2 text-center text-blue-900 font-semibold">Lowest 22K<br/>Per 10g</th>
-              <th className="px-4 py-2 text-center text-blue-900 font-semibold">Highest 22K<br/>Per 10g</th>
-              <th className="px-4 py-2 text-center text-blue-900 font-semibold">Lowest 24K<br/>Per 10g</th>
-              <th className="px-4 py-2 text-center text-blue-900 font-semibold">Highest 24K<br/>Per 10g</th>
+              <th className="px-2 lg:px-4 py-1.5 lg:py-2 text-left text-blue-900 font-semibold">Month</th>
+              <th className="px-2 lg:px-4 py-1.5 lg:py-2 text-center text-blue-900 font-semibold">Lowest 18K<br/>Per 10g</th>
+              <th className="px-2 lg:px-4 py-1.5 lg:py-2 text-center text-blue-900 font-semibold">Highest 18K<br/>Per 10g</th>
+              <th className="px-2 lg:px-4 py-1.5 lg:py-2 text-center text-blue-900 font-semibold">Lowest 22K<br/>Per 10g</th>
+              <th className="px-2 lg:px-4 py-1.5 lg:py-2 text-center text-blue-900 font-semibold">Highest 22K<br/>Per 10g</th>
+              <th className="px-2 lg:px-4 py-1.5 lg:py-2 text-center text-blue-900 font-semibold">Lowest 24K<br/>Per 10g</th>
+              <th className="px-2 lg:px-4 py-1.5 lg:py-2 text-center text-blue-900 font-semibold">Highest 24K<br/>Per 10g</th>
             </tr>
           </thead>
           <tbody>
             {demoMonthlyData.map((row, i) => (
               <tr key={row.month} className={i % 2 === 1 ? 'bg-gray-50' : ''}>
-                <td className="px-4 py-2 text-blue-800 font-medium whitespace-nowrap">{row.month}</td>
-                <td className="px-4 py-2 text-center text-blue-900 font-bold">{formatINR(row.low_18k)}</td>
-                <td className="px-4 py-2 text-center text-blue-900 font-bold">{formatINR(row.high_18k)}</td>
-                <td className="px-4 py-2 text-center text-blue-900 font-bold">{formatINR(row.low_22k)}</td>
-                <td className="px-4 py-2 text-center text-blue-900 font-bold">{formatINR(row.high_22k)}</td>
-                <td className="px-4 py-2 text-center text-blue-900 font-bold">{formatINR(row.low_24k)}</td>
-                <td className="px-4 py-2 text-center text-blue-900 font-bold">{formatINR(row.high_24k)}</td>
+                <td className="px-2 lg:px-4 py-1.5 lg:py-2 text-blue-800 font-medium whitespace-nowrap">{row.month}</td>
+                <td className="px-2 lg:px-4 py-1.5 lg:py-2 text-center text-blue-900 font-bold">{formatINR(row.low_18k)}</td>
+                <td className="px-2 lg:px-4 py-1.5 lg:py-2 text-center text-blue-900 font-bold">{formatINR(row.high_18k)}</td>
+                <td className="px-2 lg:px-4 py-1.5 lg:py-2 text-center text-blue-900 font-bold">{formatINR(row.low_22k)}</td>
+                <td className="px-2 lg:px-4 py-1.5 lg:py-2 text-center text-blue-900 font-bold">{formatINR(row.high_22k)}</td>
+                <td className="px-2 lg:px-4 py-1.5 lg:py-2 text-center text-blue-900 font-bold">{formatINR(row.low_24k)}</td>
+                <td className="px-2 lg:px-4 py-1.5 lg:py-2 text-center text-blue-900 font-bold">{formatINR(row.high_24k)}</td>
               </tr>
             ))}
           </tbody>
