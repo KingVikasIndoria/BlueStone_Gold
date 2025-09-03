@@ -2,17 +2,21 @@ import { useEffect, useRef, useState } from 'react';
 
 export default function Header() {
   const iframeRef = useRef(null);
-  const [src, setSrc] = useState('/header/header.html');
-  const [version] = useState(() => Date.now());
+  const [src, setSrc] = useState('');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+
+    let resizeObserver = null;
+    let resizeTimer = null;
+
     function updateHeight() {
       const iframe = iframeRef.current;
       if (!iframe) return;
       try {
         const doc = iframe.contentWindow?.document;
         if (!doc) return;
-        // Ensure "Locate Our Store" redirects to the desired URL in top window
         try {
           const storeLink = doc.querySelector('.store-block .c-link');
           if (storeLink && !storeLink.getAttribute('data-bound')) {
@@ -32,38 +36,59 @@ export default function Header() {
               }
             });
           }
-        } catch (_) {
-          // ignore
-        }
-        const headerEl = doc.querySelector('header');
-        const h = (headerEl && headerEl.offsetHeight) || (doc.body && doc.body.offsetHeight) || 120;
+        } catch (_) {}
+        const headerEl = doc.querySelector('header') || doc.body;
+        const h = (headerEl && headerEl.offsetHeight) || 120;
         iframe.style.height = `${h}px`;
-      } catch (_) {
-        // cross-origin safety (shouldn't happen for /public assets)
-      }
+      } catch (_) {}
     }
 
     function chooseSrc() {
       const isMobile = typeof window !== 'undefined' && window.innerWidth <= 425;
-      const base = isMobile ? '/header/header-mobile.html' : '/header/header.html';
-      setSrc(`${base}?v=${version}`);
+      setSrc(isMobile ? '/header/header-mobile.html' : '/header/header.html');
+    }
+
+    function bindObservers() {
+      const iframe = iframeRef.current;
+      if (!iframe) return;
+      try {
+        const doc = iframe.contentWindow?.document;
+        if (!doc) return;
+        const target = doc.querySelector('header') || doc.body;
+        if (target && 'ResizeObserver' in window) {
+          resizeObserver = new ResizeObserver(() => updateHeight());
+          resizeObserver.observe(target);
+        }
+      } catch (_) {}
+      updateHeight();
     }
 
     const iframe = iframeRef.current;
-    if (iframe) {
-      iframe.addEventListener('load', updateHeight);
-    }
-    const interval = setInterval(updateHeight, 500);
+    if (iframe) iframe.addEventListener('load', bindObservers);
+
     chooseSrc();
-    const onResize = () => { chooseSrc(); updateHeight(); };
+
+    const onResize = () => {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        chooseSrc();
+        updateHeight();
+      }, 150);
+    };
     window.addEventListener('resize', onResize);
 
     return () => {
-      if (iframe) iframe.removeEventListener('load', updateHeight);
-      clearInterval(interval);
+      if (iframe) iframe.removeEventListener('load', bindObservers);
+      if (resizeObserver) resizeObserver.disconnect();
+      if (resizeTimer) clearTimeout(resizeTimer);
       window.removeEventListener('resize', onResize);
     };
   }, []);
+
+  if (!mounted || !src) {
+    // Avoid desktop-first flash; reserve space to prevent layout shift
+    return <div style={{ width: '100%', height: 64 }} />;
+  }
 
   return (
     <iframe
@@ -80,6 +105,7 @@ export default function Header() {
       }}
       scrolling="no"
       title="BlueStone Header"
+      loading="eager"
     />
   );
 }

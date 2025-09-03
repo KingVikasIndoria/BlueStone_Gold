@@ -116,8 +116,8 @@ const GoldPriceBannerComponent: React.FC<GoldPriceBannerProps> = ({ mobileStyle 
       {/* Left Section - Banner and Gold Price Card */}
       <div className="w-full lg:w-9/12 flex flex-col gap-1.5 lg:gap-4">
         {/* Banner Carousel - Mobile optimized height */}
-        <div className="w-full h-24 sm:h-32 lg:h-64 relative">
-          <div className="relative w-full h-full overflow-hidden rounded-lg">
+        <div className="w-full h-24 sm:h-32 lg:h-64 relative bg-white">
+          <div className="relative w-full h-full overflow-hidden">
             {images.map((image, index) => (
               <div
                 key={index}
@@ -129,7 +129,7 @@ const GoldPriceBannerComponent: React.FC<GoldPriceBannerProps> = ({ mobileStyle 
                 <img
                   src={image}
                   alt={`Gold Banner ${index + 1}`}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover bg-white"
                 />
               </div>
             ))}

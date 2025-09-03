@@ -5,7 +5,15 @@
 [build.environment]
   NODE_VERSION = "18"
 
+[[functions]]
+  directory = "netlify/functions"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/api/submit-alert"
+  to = "/.netlify/functions/submit-alert"
   status = 200

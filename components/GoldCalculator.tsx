@@ -72,9 +72,8 @@ export default function TempGoldCalculator({ price22k, price24k, city, t }: Temp
   const handleInputChange = (field: string, value: string) => {
     if (field === 'grams') setGrams(value);
     if (field === 'makingCharges') setMakingCharges(value);
-    if ((field === 'grams' && value && makingCharges) || (field === 'makingCharges' && value && grams)) {
-      setTimeout(calculatePrice, 100);
-    }
+    // Clear previous results; user must click Calculate to see new values
+    setResult(null);
   };
 
   return (
@@ -110,7 +109,7 @@ export default function TempGoldCalculator({ price22k, price24k, city, t }: Temp
                   type="radio"
                   value="22k"
                   checked={purity === '22k'}
-                  onChange={(e) => setPurity(e.target.value as '18k' | '22k' | '24k')}
+                  onChange={(e) => { setPurity(e.target.value as '18k' | '22k' | '24k'); setResult(null); }}
                   className="w-4 h-4 border-gray-300 focus:ring-[#032d5f]"
                 style={{ accentColor: '#032d5f' }}
                 />
@@ -122,7 +121,7 @@ export default function TempGoldCalculator({ price22k, price24k, city, t }: Temp
                   type="radio"
                   value="24k"
                   checked={purity === '24k'}
-                  onChange={(e) => setPurity(e.target.value as '18k' | '22k' | '24k')}
+                  onChange={(e) => { setPurity(e.target.value as '18k' | '22k' | '24k'); setResult(null); }}
                   className="w-4 h-4 border-gray-300 focus:ring-[#032d5f]"
                 style={{ accentColor: '#032d5f' }}
                 />
@@ -134,7 +133,7 @@ export default function TempGoldCalculator({ price22k, price24k, city, t }: Temp
                   type="radio"
                   value="18k"
                   checked={purity === '18k'}
-                  onChange={(e) => setPurity(e.target.value as '18k' | '22k' | '24k')}
+                  onChange={(e) => { setPurity(e.target.value as '18k' | '22k' | '24k'); setResult(null); }}
                   className="w-4 h-4 border-gray-300 focus:ring-[#032d5f]"
                 style={{ accentColor: '#032d5f' }}
                 />
@@ -231,7 +230,7 @@ export default function TempGoldCalculator({ price22k, price24k, city, t }: Temp
                     type="radio"
                     value="22k"
                     checked={purity === '22k'}
-                    onChange={(e) => setPurity(e.target.value as '18k' | '22k' | '24k')}
+                    onChange={(e) => { setPurity(e.target.value as '18k' | '22k' | '24k'); setResult(null); }}
                     className="mr-3 text-blue-600 focus:ring-blue-500"
                   />
                   <div>
@@ -244,7 +243,7 @@ export default function TempGoldCalculator({ price22k, price24k, city, t }: Temp
                     type="radio"
                     value="24k"
                     checked={purity === '24k'}
-                    onChange={(e) => setPurity(e.target.value as '18k' | '22k' | '24k')}
+                    onChange={(e) => { setPurity(e.target.value as '18k' | '22k' | '24k'); setResult(null); }}
                     className="mr-3 text-blue-600 focus:ring-blue-500"
                   />
                   <div>
@@ -257,7 +256,7 @@ export default function TempGoldCalculator({ price22k, price24k, city, t }: Temp
                     type="radio"
                     value="18k"
                     checked={purity === '18k'}
-                    onChange={(e) => setPurity(e.target.value as '18k' | '22k' | '24k')}
+                    onChange={(e) => { setPurity(e.target.value as '18k' | '22k' | '24k'); setResult(null); }}
                     className="mr-3 text-blue-600 focus:ring-blue-500"
                   />
                   <div>
