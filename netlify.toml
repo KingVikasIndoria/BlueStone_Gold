@@ -1,34 +1,24 @@
 [build]
-  command = "npm run build"
+  command = "next build && next export"
   publish = "out"
 
 [build.environment]
   NODE_VERSION = "18"
 
-[[functions]]
+[functions]
   directory = "netlify/functions"
 
 [[redirects]]
   from = "/gold-rate.html"
-  to = "/gold-rate/"
+  to = "/gold-rates"
   status = 200
 
 [[redirects]]
   from = "/gold-rate/:state.html"
-  to = "/states/:state/"
+  to = "/states/:state"
   status = 200
 
 [[redirects]]
   from = "/gold-rates/:city.html"
-  to = "/cities/:city/"
-  status = 200
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/api/submit-alert"
-  to = "/.netlify/functions/submit-alert"
+  to = "/cities/:city"
   status = 200
