@@ -825,5 +825,15 @@
     "currency": "INR",
     "unit": "1 Gram",
     "price_date(today)": "2025-09-02 T18:02:24.167796"
+  },
+  {
+      "date": "2025-09-03",
+      "timestamp": "2025-09-03T00:00:00",
+      "22k": 9905,
+      "24k": 10400,
+      "currency": "INR",
+      "unit": "1 Gram",
+      "status_code": 200
+    
   }
 ]

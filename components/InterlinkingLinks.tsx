@@ -34,7 +34,7 @@ const InterlinkingLinks = () => {
           <div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
               {metroCities.map((c) => (
-                <Link key={c} href={`/cities/${cityToSlug(c)}`} className="text-blue-700 hover:text-blue-900 no-underline hover:no-underline" style={{ textDecoration: 'none', borderBottom: 'none' }}>
+                <Link key={c} href={`/gold-rates/${cityToSlug(c)}.html`} className="text-blue-700 hover:text-blue-900 no-underline hover:no-underline" style={{ textDecoration: 'none', borderBottom: 'none' }}>
                   {`Gold Rate in ${c}`}
                 </Link>
               ))}
@@ -46,7 +46,7 @@ const InterlinkingLinks = () => {
             <h3 className="text-blue-900 font-bold text-[11px] lg:text-[13px] mb-3">Gold Rate in Other Capitals</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
               {otherCapitals.map((c) => (
-                <Link key={c} href={`/cities/${cityToSlug(c)}`} className="text-blue-700 hover:text-blue-900 no-underline hover:no-underline" style={{ textDecoration: 'none', borderBottom: 'none' }}>
+                <Link key={c} href={`/gold-rates/${cityToSlug(c)}.html`} className="text-blue-700 hover:text-blue-900 no-underline hover:no-underline" style={{ textDecoration: 'none', borderBottom: 'none' }}>
                   {`Gold Rate in ${c}`}
                 </Link>
               ))}
@@ -58,7 +58,7 @@ const InterlinkingLinks = () => {
             <h3 className="text-blue-900 font-bold text-[11px] lg:text-[13px] mb-3">Gold Rate in Other Major Cities</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
               {otherMajorCities.map((c) => (
-                <Link key={c} href={`/cities/${cityToSlug(c)}`} className="text-blue-700 hover:text-blue-900 no-underline hover:no-underline" style={{ textDecoration: 'none', borderBottom: 'none' }}>
+                <Link key={c} href={`/gold-rates/${cityToSlug(c)}.html`} className="text-blue-700 hover:text-blue-900 no-underline hover:no-underline" style={{ textDecoration: 'none', borderBottom: 'none' }}>
                   {`Gold Rate in ${c}`}
                 </Link>
               ))}
@@ -70,7 +70,7 @@ const InterlinkingLinks = () => {
             <h3 className="text-blue-900 font-bold text-[11px] lg:text-[13px] mb-3">Gold Rate in States</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
               {states.map((s) => (
-                <Link key={s} href={`/states/${cityToSlug(s)}`} className="text-blue-700 hover:text-blue-900 no-underline hover:no-underline" style={{ textDecoration: 'none', borderBottom: 'none' }}>
+                <Link key={s} href={`/gold-rate/${cityToSlug(s)}.html`} className="text-blue-700 hover:text-blue-900 no-underline hover:no-underline" style={{ textDecoration: 'none', borderBottom: 'none' }}>
                   {`Gold Rate in ${s}`}
                 </Link>
               ))}

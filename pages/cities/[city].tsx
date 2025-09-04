@@ -1,130 +1,72 @@
-import React, { useMemo, useState } from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, AreaChart, Area } from 'recharts';
-import GoldGraph from '../../components/GoldGraph';
+import fs from 'fs';
+import path from 'path';
+import React, { useState } from 'react';
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+import Breadcrumbs from '../../components/Breadcrumbs';
+import GoldPriceBannerComponent from '../../components/GoldPriceBannerComponent';
+import Last10DaysTable from '../../components/Last10DaysTable';
+import InterlinkingLinks from '../../components/InterlinkingLinks';
+import { cityBelongsToState, citySlug } from '../../lib/geo';
 import GoldCalculator from '../../components/GoldCalculator';
 import NearbyCities from '../../components/NearbyCities';
-import Last10DaysTable from '../../components/Last10DaysTable';
-import HistoricalMonthlyTable from '../../components/HistoricalMonthlyTable';
 import FAQAccordion from '../../components/FAQAccordion';
-import GoldPriceBannerComponent from '../../components/GoldPriceBannerComponent';
-import InterlinkingLinks from '../../components/InterlinkingLinks';
-import Footer from '../../components/Footer';
-import Link from 'next/link';
-import Header from '../../components/Header';
+import HistoricalMonthlyTable from '../../components/HistoricalMonthlyTable';
 
- 
+type CityRecord = { date: string; ['22k']: number; ['24k']: number };
 
-function formatDateTime(date: Date) {
-  const day = date.toLocaleDateString('en-GB', { weekday: 'short' });
-  const d = date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
-  const t = date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: true });
-  return `${day}, ${d} at ${t.toLowerCase()}`;
+interface CityPageProps {
+  city: string;
+  state: string | null;
+  last10: { date: string; price_22k: number; price_24k: number }[];
+  latest22k: number;
+  latest24k: number;
+  series: { date: string; price_22k: number; price_24k: number }[];
+  blue22k: number;
+  blue24k: number;
 }
 
-function getPercentageDiff(city: number, blueStone: number) {
-  if (!city) return null;
-  const diff = ((city - blueStone) / city) * 100;
-  return diff;
-}
-
- 
-
-// Load real Chennai data at build time
-import chennaiDataRaw from '../../data/cities/chennai.json';
-
-type RawItem = { date: string; [k: string]: any };
-const chennaiData: { date: string; price_22k: number; price_24k: number }[] = (chennaiDataRaw as RawItem[])
-  .map((d) => ({
-    date: d.date,
-    price_22k: d['22k'],
-    price_24k: d['24k'],
-  })); // keep oldest -> newest order
-
-// BlueStone prices are always lower (e.g., -100 for 24K, -90 for 22K)
-const staticBlueStoneData = chennaiData.map((d) => ({
-  date: d.date,
-  price_24k: d.price_24k - 100,
-  price_22k: d.price_22k - 90,
-}));
-
-// For the table, use the latest date's prices
-const latestChennai = chennaiData[chennaiData.length - 1];
-const latestBlueStone = staticBlueStoneData[0];
-
-const chennai18k = Math.round(latestChennai.price_24k * 0.75);
-const blueStone18k = Math.round(latestBlueStone.price_24k * 0.75);
-
-const percent18k = getPercentageDiff(chennai18k, blueStone18k);
-const percent22k = getPercentageDiff(latestChennai.price_22k, latestBlueStone.price_22k);
-const percent24k = getPercentageDiff(latestChennai.price_24k, latestBlueStone.price_24k);
-
-// For the graph, use the real data in GoldPrice format (recent slice)
-const historicalData = chennaiData.slice(-30).map((d) => ({
-  date: d.date,
-  price_22k: d.price_22k,
-  price_24k: d.price_24k,
-  city_name: 'Chennai',
-}));
-
-export default function ChennaiDesignPage() {
+export default function CityPage({ city, state, last10, latest22k, latest24k, series, blue22k, blue24k }: CityPageProps) {
+  const yesterday22k = last10.length > 1 ? last10[1].price_22k : latest22k;
+  const yesterday24k = last10.length > 1 ? last10[1].price_24k : latest24k;
+  const today18k = Math.round(latest24k * 0.75);
+  const yesterday18k = Math.round(yesterday24k * 0.75);
   const [range, setRange] = useState<'7d' | '30d' | '3m'>('7d');
   const selectedDays = range === '7d' ? 7 : range === '30d' ? 30 : 90;
-  const chartData = chennaiData
+  const chartData = series
     .slice(-selectedDays)
     .map(d => ({
       date: new Date(d.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }),
-      price: d.price_22k
+      price: d.price_22k,
     }));
-  const last10 = useMemo(() => {
-    return chennaiData
-      .slice(-10)
-      .map((d) => ({
-        date: new Date(d.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
-        price_22k: d.price_22k,
-        price_24k: d.price_24k,
-      }))
-      .reverse(); // latest first for table logic
-  }, []);
 
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden" style={{ backgroundColor: '#F0F0F0' }}>
-      {/* BlueStone Header (sticky) */}
       <header className="sticky top-0 z-50 bg-white shadow-md border-b border-blue-200">
         <Header />
       </header>
 
-      {/* Main Content */}
       <main className="flex-1 p-1 lg:p-4 space-y-0.5 lg:space-y-2">
-        {/* Breadcrumb */}
-        <div className="w-full px-2 lg:px-4 py-0">
-          <div className="bread-crumbs mb-0">
-          <ul className="flex items-center text-[9px] lg:text-xs uppercase tracking-wide space-x-2" style={{ fontFamily: 'Montserrat, Proxima Nova, Arial, sans-serif' }}>
-            <li>
-              <Link href="/" style={{ color: '#2A7ABE' }} className="hover:underline">Home</Link>
-            </li>
-            <li style={{ color: '#4D4D4D' }}>/</li>
-            <li>
-              <Link href="/gold-rates" style={{ color: '#2A7ABE' }} className="hover:underline">Gold Rate</Link>
-            </li>
-            <li style={{ color: '#4D4D4D' }}>/</li>
-            <li>
-              <span className="font-medium lg:font-semibold" style={{ color: '#2C2F5C' }}>Chennai</span>
-            </li>
-          </ul>
-        </div>
-          </div>
-
-        {/* Gold Price Banner Component */}
-        <GoldPriceBannerComponent
-          mobileStyle="table"
-          cityName="Chennai"
-          price22k={latestChennai.price_22k}
-          price24k={latestChennai.price_24k}
-          bluestone22k={latestChennai.price_22k - 90}
-          bluestone24k={latestChennai.price_24k - 100}
+        <Breadcrumbs
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Gold Rate', href: '/gold-rates' },
+            ...(state ? [{ label: `Gold Rate in ${state}`, href: `/states/${citySlug(state)}/` }] : []),
+            { label: `Gold Rate in ${city}` },
+          ]}
         />
 
-          {/* Goldmine Banner */}
+        <GoldPriceBannerComponent
+          mobileStyle="table"
+          cityName={city}
+          price22k={latest22k}
+          price24k={latest24k}
+          bluestone22k={blue22k}
+          bluestone24k={blue24k}
+        />
+
+        {/* Goldmine Banner */}
         <div className="w-full p-1 lg:p-2">
           {/* Mobile Goldmine Banner */}
           <section className="block lg:hidden">
@@ -133,7 +75,6 @@ export default function ChennaiDesignPage() {
               style={{
                 WebkitTextSizeAdjust: '100%',
                 fontFamily: 'sans-serif, Arial',
-
                 lineHeight: '1.5em',
                 WebkitTapHighlightColor: 'transparent',
                 outline: 'none !important',
@@ -180,9 +121,9 @@ export default function ChennaiDesignPage() {
             </div>
           </section>
 
-          {/* Desktop Goldmine Banner - Original with Image */}
+          {/* Desktop Goldmine Banner */}
           <section className="hidden lg:flex items-center justify-center bg-blue-50 border border-blue-200 rounded-lg shadow-gold py-4 px-6 relative overflow-hidden">
-            <a href="https://www.bluestone.com/goldmine.html" onClick={() => { if (typeof window !== 'undefined' && (window as any).trackGA) { (window as any).trackGA('GMS', 'Clicked GMS Browse', 'GMS Banner Clicked on Browse'); } }} target="_blank" rel="noopener noreferrer">
+            <a href="https://www.bluestone.com/goldmine.html" target="_blank" rel="noopener noreferrer">
               <img
                 src="https://kinclimg7.bluestone.com/f_webp/static/resources/themes/bluestone/images/new/bp-goldmine.v6.jpg"
                 alt="Goldmine Banner"
@@ -193,11 +134,11 @@ export default function ChennaiDesignPage() {
           </section>
         </div>
 
-          {/* Tables 22k & 24k */}
-        <div className="w-full px-2 lg:px-4 py-1 lg:py-2">
+        {/* 22K & 24K tables */}
+        <div className="w-full px-0 lg:px-0 py-1 lg:py-2">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
             <section className="info-card bg-white rounded-xl border border-blue-100 shadow p-4 flex flex-col justify-center">
-              <h3 className="text-blue-900 font-bold text-sm lg:text-base mb-2 lg:mb-3">22 Carat Gold Rate in Chennai (Today & Yesterday)</h3>
+              <h3 className="text-blue-900 font-bold text-sm lg:text-base mb-2 lg:mb-3">22 Carat Gold Rate in {city} (Today & Yesterday)</h3>
               <div className="overflow-x-auto">
                 <table className="min-w-full text-xs lg:text-sm border border-blue-100 rounded-lg">
                   <thead>
@@ -210,17 +151,15 @@ export default function ChennaiDesignPage() {
                   </thead>
                   <tbody>
                     {(() => {
-                      const today = latestChennai.price_22k;
-                      const yesterday = chennaiData[chennaiData.length - 2].price_22k;
+                      const today = latest22k;
+                      const yesterday = yesterday22k;
                       const rows = [
                         { label: '1 gram', t: today, y: yesterday },
                         { label: '8 grams', t: today * 8, y: yesterday * 8 },
                         { label: '10 grams', t: today * 10, y: yesterday * 10 },
                         { label: '12 grams', t: today * 12, y: yesterday * 12 },
                       ];
-                      function formatINR(n: number) {
-                        return '₹' + n.toLocaleString('en-IN');
-                      }
+                      function formatINR(n: number) { return '₹' + n.toLocaleString('en-IN'); }
                       return rows.map((row, i) => (
                         <tr key={row.label} className={i !== rows.length - 1 ? 'border-b border-blue-50' : ''}>
                           <td className="px-2 lg:px-4 py-1.5 lg:py-2 text-blue-800 font-medium whitespace-nowrap text-xs lg:text-sm">{row.label}</td>
@@ -235,7 +174,7 @@ export default function ChennaiDesignPage() {
               </div>
             </section>
             <section className="info-card bg-white rounded-xl border border-blue-100 shadow p-4 flex flex-col justify-center">
-              <h3 className="text-blue-900 font-bold text-sm lg:text-base mb-2 lg:mb-3">24 Carat Gold Rate in Chennai (Today & Yesterday)</h3>
+              <h3 className="text-blue-900 font-bold text-sm lg:text-base mb-2 lg:mb-3">24 Carat Gold Rate in {city} (Today & Yesterday)</h3>
               <div className="overflow-x-auto">
                 <table className="min-w-full text-xs lg:text-sm border border-blue-100 rounded-lg">
                   <thead>
@@ -248,17 +187,15 @@ export default function ChennaiDesignPage() {
                   </thead>
                   <tbody>
                     {(() => {
-                      const today = latestChennai.price_24k;
-                      const yesterday = chennaiData[chennaiData.length - 2].price_24k;
+                      const today = latest24k;
+                      const yesterday = yesterday24k;
                       const rows = [
                         { label: '1 gram', t: today, y: yesterday },
                         { label: '8 grams', t: today * 8, y: yesterday * 8 },
                         { label: '10 grams', t: today * 10, y: yesterday * 10 },
                         { label: '12 grams', t: today * 12, y: yesterday * 12 },
                       ];
-                      function formatINR(n: number) {
-                        return '₹' + n.toLocaleString('en-IN');
-                      }
+                      function formatINR(n: number) { return '₹' + n.toLocaleString('en-IN'); }
                       return rows.map((row, i) => (
                         <tr key={row.label} className={i !== rows.length - 1 ? 'border-b border-blue-50' : ''}>
                           <td className="px-2 lg:px-4 py-1.5 lg:py-2 text-blue-800 font-medium whitespace-nowrap text-xs lg:text-sm">{row.label}</td>
@@ -273,10 +210,9 @@ export default function ChennaiDesignPage() {
               </div>
             </section>
           </div>
-          </div>
+        </div>
 
-          {/* End of the grid for 22k & 24k tables */}
-        {/* Store Banner */}
+        {/* Store Banner (placed right after 22K/24K tables to match Chennai) */}
         <div className="w-full px-2 lg:px-4 py-1 lg:py-2">
           <div className="mt-3 lg:mt-2">
             {/* Mobile Store Banner */}
@@ -295,7 +231,7 @@ export default function ChennaiDesignPage() {
             {/* Desktop Store Banner - Original */}
             <div className="hidden lg:block">
               <a
-                href="/store.html"
+                href="https://www.bluestone.com/store.html"
                 className="ga-event-trigger block"
                 data-eventname="staticBannerSection_DropintoaBlueStone"
                 data-pos="14"
@@ -313,21 +249,23 @@ export default function ChennaiDesignPage() {
           </div>
         </div>
 
-          {/* Gold Price Calculator */}
-        <div className="w-full px-2 lg:px-4 py-1 lg:py-2">
+        {/* Calculator */}
+        <div className="w-full px-0 lg:px-0 py-1 lg:py-2">
           <section className="info-card bg-white rounded-xl border border-blue-100 shadow p-3 lg:p-4 flex flex-col justify-center">
-            <GoldCalculator price22k={latestChennai.price_22k} price24k={latestChennai.price_24k} city="Chennai" />
+            <GoldCalculator price22k={latest22k} price24k={latest24k} city={city} />
           </section>
         </div>
 
-          {/* Gold price in city vs nearby cities & Top cities */}
-        <div className="w-full px-2 lg:px-4 py-1 lg:py-2">
+        {/* Nearby cities & 18K table (after calculator, to match Chennai) */}
+        <div className="w-full px-0 lg:px-0 py-1 lg:py-2">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
             <section className="info-card bg-white rounded-xl border border-blue-100 shadow p-3 lg:p-4 flex flex-col justify-center">
-              <NearbyCities currentCity="Chennai" currentState="Tamil Nadu" base22k={latestChennai.price_22k} base24k={latestChennai.price_24k} cityDisplayName="Chennai" />
+              {state && (
+                <NearbyCities currentCity={city} currentState={state} base22k={latest22k} base24k={latest24k} cityDisplayName={city} />
+              )}
             </section>
-            <section className="info-card bg-white rounded-xl border border-blue-100 shadow p-3 lg:p-4 flex flex-col justify-center h-64 lg:h-80">
-              <h3 className="text-blue-900 font-bold text-base lg:text-base mb-2 lg:mb-3">18 Carat Gold Rate in Chennai (Today & Yesterday)</h3>
+            <section className="info-card bg-white rounded-xl border border-blue-100 shadow p-4 flex flex-col justify-center">
+              <h3 className="text-blue-900 font-bold text-base lg:text-base mb-2 lg:mb-3">18 Carat Gold Rate in {city} (Today & Yesterday)</h3>
               <div className="overflow-x-auto">
                 <table className="min-w-full text-xs lg:text-sm border border-blue-100 rounded-lg">
                   <thead>
@@ -340,17 +278,13 @@ export default function ChennaiDesignPage() {
                   </thead>
                   <tbody>
                     {(() => {
-                      const today18 = Math.round(latestChennai.price_24k * 0.75);
-                      const yesterday18 = Math.round(chennaiData[chennaiData.length - 2].price_24k * 0.75);
                       const rows = [
-                        { label: '1 gram', t: today18, y: yesterday18 },
-                        { label: '8 grams', t: today18 * 8, y: yesterday18 * 8 },
-                        { label: '10 grams', t: today18 * 10, y: yesterday18 * 10 },
-                        { label: '12 grams', t: today18 * 12, y: yesterday18 * 12 },
+                        { label: '1 gram', t: today18k, y: yesterday18k },
+                        { label: '8 grams', t: today18k * 8, y: yesterday18k * 8 },
+                        { label: '10 grams', t: today18k * 10, y: yesterday18k * 10 },
+                        { label: '12 grams', t: today18k * 12, y: yesterday18k * 12 },
                       ];
-                      function formatINR(n: number) {
-                        return '₹' + n.toLocaleString('en-IN');
-                      }
+                      function formatINR(n: number) { return '₹' + n.toLocaleString('en-IN'); }
                       return rows.map((row, i) => (
                         <tr key={row.label} className={i !== rows.length - 1 ? 'border-b border-blue-50' : ''}>
                           <td className="px-2 lg:px-4 py-1.5 lg:py-2 text-blue-800 font-medium whitespace-nowrap text-xs lg:text-sm">{row.label}</td>
@@ -365,18 +299,17 @@ export default function ChennaiDesignPage() {
               </div>
             </section>
           </div>
-          </div>
+        </div>
 
-          {/* Last 10 days Price Table & One More Graph */}
-        <div className="w-full px-2 lg:px-4 py-1 lg:py-2">
+        {/* Last 10 days & Graph */}
+        <div className="w-full px-0 lg:px-0 py-1 lg:py-2">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
             <section className="info-card bg-white rounded-xl border border-blue-100 shadow p-3 lg:p-4 flex flex-col justify-start h-auto overflow-hidden">
-              <Last10DaysTable data={last10} />
+              <Last10DaysTable data={last10} cityName={city} />
             </section>
             <section className="info-card h-auto p-3 lg:p-4">
-              {/* Gold Rate Graph with Tabs */}
               <div className="w-full mx-auto p-3 lg:p-4 bg-white rounded-lg">
-                <h3 className="text-sm lg:text-base font-bold text-blue-900 mb-3 lg:mb-4">Weekly & Monthly Graph of 22K Gold Rate in Chennai (1 gram)</h3>
+                <h3 className="text-sm lg:text-base font-bold text-blue-900 mb-3 lg:mb-4">Weekly & Monthly Graph of 22K Gold Rate in {city} (1 gram)</h3>
                 <div className="flex gap-2 lg:gap-3 mb-3 lg:mb-4">
                   <button onClick={() => setRange('7d')} className={`px-2 lg:px-3 py-1 rounded font-semibold text-xs lg:text-sm ${range==='7d' ? 'bg-blue-700 text-white' : 'bg-white text-blue-700 border border-blue-200'}`}>7 Days</button>
                   <button onClick={() => setRange('30d')} className={`px-2 lg:px-3 py-1 rounded font-semibold text-xs lg:text-sm ${range==='30d' ? 'bg-blue-700 text-white' : 'bg-white text-blue-700 border border-blue-200'}`}>30 Days</button>
@@ -395,8 +328,8 @@ export default function ChennaiDesignPage() {
                       <YAxis domain={[
                         (dataMin: number) => Math.floor((dataMin - 50) / 50) * 50,
                         (dataMax: number) => Math.ceil((dataMax + 50) / 50) * 50
-                      ]} tickFormatter={v => `₹${v.toLocaleString('en-IN')}`} fontSize={10} width={50} />
-                      <Tooltip formatter={v => `₹${v.toLocaleString('en-IN')}`} labelFormatter={d => `Date: ${d}`} />
+                      ]} tickFormatter={(v) => `₹${v.toLocaleString('en-IN')}`} fontSize={10} width={50} />
+                      <Tooltip formatter={(v: number) => `₹${(v as number).toLocaleString('en-IN')}`} labelFormatter={(d) => `Date: ${d}`} />
                       <Area type="monotone" dataKey="price" stroke="#2563eb" fill="url(#colorGold)" strokeWidth={2} dot={false} />
                     </AreaChart>
                   </ResponsiveContainer>
@@ -404,43 +337,43 @@ export default function ChennaiDesignPage() {
               </div>
             </section>
           </div>
-          </div>
+        </div>
 
-          {/* Historical price in a city */}
-        <div className="w-full px-2 lg:px-4 py-1 lg:py-2">
+        {/* Historical price in a city */}
+        <div className="w-full px-0 lg:px-0 py-1 lg:py-2">
           <section className="info-card bg-white rounded-xl border border-blue-100 shadow p-3 lg:p-4 flex flex-col justify-center h-64 lg:h-80">
-            <HistoricalMonthlyTable />
+            <HistoricalMonthlyTable cityName={city} />
           </section>
         </div>
 
-          {/* Info about the city gold trend */}
-        <div className="w-full px-2 lg:px-4 py-1 lg:py-2">
+        {/* Info about the city gold trend */}
+        <div className="w-full px-0 lg:px-0 py-1 lg:py-2">
           <section className="info-card bg-white rounded-xl border border-blue-100 shadow p-3 lg:p-4 flex flex-col justify-center">
-            <h3 className="text-blue-900 font-bold text-base lg:text-lg mb-2 lg:mb-3">Gold Rate Guide for Chennai</h3>
+            <h3 className="text-blue-900 font-bold text-base lg:text-lg mb-2 lg:mb-3">Gold Rate Guide for {city}</h3>
             <p className="mb-2 text-blue-900 text-sm lg:text-base">
               Gold is that precious metal which everyone wants to own in their life—especially in Indian households. People
               prefer buying gold because it is a long‑term investment whose value is likely to increase in the future.
             </p>
             <p className="mb-2 text-blue-900 text-sm lg:text-base">
-              But before buying gold, it is essential to know what the gold rates are in the market. If you live in Chennai, you
+              But before buying gold, it is essential to know what the gold rates are in the market. If you live in {city}, you
               already know there is strong demand for gold jewellery, coins, and investment bars. Whether you are purchasing gold
-              for weddings, festivals, or investing in gold as an asset, staying updated with the gold rate in Chennai becomes
+              for weddings, festivals, or investing in gold as an asset, staying updated with the gold rate in {city} becomes
               crucial.
             </p>
             <p className="mb-2 text-blue-900 text-sm lg:text-base">
-              Gold rate in Chennai depends on international market trends, demand, currency fluctuations, and government
+              Gold rate in {city} depends on international market trends, demand, currency fluctuations, and government
               policies. Keeping track of live gold rates helps you make the right buying or selling decisions as gold prices change
               daily.
             </p>
             <p className="mb-3 text-blue-900 text-sm lg:text-base">
-              We at BlueStone ensure that the pricing of our jewellery is based on the live gold rate in Chennai, along with a
+              We at BlueStone ensure that the pricing of our jewellery is based on the live gold rate in {city}, along with a
               clear breakup of making charges and GST. So, if you're buying gold for investment or as jewellery, checking
               today’s gold rate can help you make informed decisions.
             </p>
 
-            <h4 className="text-blue-800 font-bold mt-2 lg:mt-3 mb-2 text-sm lg:text-base">Best Gold Investment Options in Chennai</h4>
+            <h4 className="text-blue-800 font-bold mt-2 lg:mt-3 mb-2 text-sm lg:text-base">Best Gold Investment Options in {city}</h4>
             <p className="mb-2 text-blue-900 text-sm lg:text-base">
-              In Chennai, you can explore diverse ways to invest in gold—depending on your goals, be it tradition, security, or
+              In {city}, you can explore diverse ways to invest in gold—depending on your goals, be it tradition, security, or
               financial returns. Some prefer jewellery for its beauty, while others opt for coins or bonds for long‑term
               investments.
             </p>
@@ -452,9 +385,9 @@ export default function ChennaiDesignPage() {
               <li className="mb-1"><strong>Sovereign Gold Bonds (SGBs)</strong> – Government‑issued bonds that offer interest income along with exposure to gold price.</li>
             </ul>
 
-            <h4 className="text-blue-800 font-bold mt-2 lg:mt-3 mb-2 text-sm lg:text-base">Factors That Affect Gold Rate in Chennai</h4>
+            <h4 className="text-blue-800 font-bold mt-2 lg:mt-3 mb-2 text-sm lg:text-base">Factors That Affect Gold Rate in {city}</h4>
             <p className="mb-2 text-blue-900 text-sm lg:text-base">
-              The gold rate in Chennai doesn’t stay constant. It is influenced by multiple factors—global and domestic—that change
+              The gold rate in {city} doesn’t stay constant. It is influenced by multiple factors—global and domestic—that change
               daily. Understanding these helps you make better decisions.
             </p>
             <ul className="list-disc pl-4 lg:pl-6 mb-2 text-blue-900 text-sm lg:text-base">
@@ -465,7 +398,7 @@ export default function ChennaiDesignPage() {
               <li className="mb-1"><strong>Government Duties & Taxes</strong> – Customs duty, GST and import policies affect the retail price you pay.</li>
             </ul>
 
-            <h4 className="text-blue-800 font-bold mt-2 lg:mt-3 mb-2 text-sm lg:text-base">How to Check Gold Purity in Chennai</h4>
+            <h4 className="text-blue-800 font-bold mt-2 lg:mt-3 mb-2 text-sm lg:text-base">How to Check Gold Purity in {city}</h4>
             <p className="mb-2 text-blue-900 text-sm lg:text-base">
               Don’t get fooled when buying a precious metal like gold. Always verify purity before purchasing.
             </p>
@@ -473,30 +406,30 @@ export default function ChennaiDesignPage() {
               <li className="mb-1"><strong>Hallmark Certification</strong> – Look for BIS hallmarking that certifies purity (e.g., 22K or 24K).</li>
               <li className="mb-1"><strong>Magnet Test</strong> – Real gold is non‑magnetic; if it sticks to a magnet, it’s impure.</li>
               <li className="mb-1"><strong>Acid Test</strong> – Done by professionals using nitric acid to verify authenticity.</li>
-              <li className="mb-1"><strong>Electronic Testing Machines</strong> – Many reputed Chennai stores use modern machines for accurate testing.</li>
+              <li className="mb-1"><strong>Electronic Testing Machines</strong> – Many reputed stores use modern machines for accurate testing.</li>
               <li className="mb-1"><strong>Bill & Certification</strong> – Always demand an invoice with karat, weight and hallmark number.</li>
             </ul>
 
-            <h4 className="text-blue-800 font-bold mt-2 lg:mt-3 mb-2 text-sm lg:text-base">Things to Consider Before Buying Gold in Chennai</h4>
+            <h4 className="text-blue-800 font-bold mt-2 lg:mt-3 mb-2 text-sm lg:text-base">Things to Consider Before Buying Gold in {city}</h4>
             <ul className="list-disc pl-4 lg:pl-6 mb-2 text-blue-900 text-sm lg:text-base">
               <li className="mb-1"><strong>Compare Gold Rates</strong> – Check live rates across multiple jewellers to get the best price.</li>
               <li className="mb-1"><strong>Hallmarking & Certified Jewellery</strong> – Ensure every piece is BIS‑certified to avoid paying for impure gold.</li>
-              <li className="mb-1"><strong>Buy from Reputed Jewellers</strong> – Prefer trusted stores in Chennai for better resale assurance.</li>
+              <li className="mb-1"><strong>Buy from Reputed Jewellers</strong> – Prefer trusted stores for better resale assurance.</li>
               <li className="mb-1"><strong>Consider Investment Goals</strong> – For long‑term investments, coins, bars or bonds are usually better than jewellery.</li>
             </ul>
 
-            <h4 className="text-blue-800 font-bold mt-2 lg:mt-3 mb-2 text-sm lg:text-base">How to Sell Physical Gold at the Highest Price in Chennai</h4>
+            <h4 className="text-blue-800 font-bold mt-2 lg:mt-3 mb-2 text-sm lg:text-base">How to Sell Physical Gold at the Highest Price in {city}</h4>
             <ul className="list-disc pl-4 lg:pl-6 mb-2 text-blue-900 text-sm lg:text-base">
-              <li className="mb-1">Check the current gold rate in Chennai and sell accordingly—never sell without confirming the day’s price.</li>
+              <li className="mb-1">Check the current gold rate in {city} and sell accordingly—never sell without confirming the day’s price.</li>
               <li className="mb-1">Sell at authorised dealers such as reputed jewellers or trusted banks for fairer valuation.</li>
               <li className="mb-1">Avoid pawn brokers who may offer lower valuations for quick cash.</li>
               <li className="mb-1">Carry the bill and hallmark certificate; it adds credibility and improves offers.</li>
               <li className="mb-1">Compare multiple buyers before selling to secure the best deal.</li>
             </ul>
 
-            <h4 className="text-blue-800 font-bold mt-2 lg:mt-3 mb-2 text-sm lg:text-base">Impact of GST on Gold Rate in Chennai</h4>
+            <h4 className="text-blue-800 font-bold mt-2 lg:mt-3 mb-2 text-sm lg:text-base">Impact of GST on Gold Rate in {city}</h4>
             <p className="mb-2 text-blue-900 text-sm lg:text-base">
-              GST has influenced gold prices in Chennai by making taxation more uniform yet adding a small increase to the final
+              GST has influenced gold prices in {city} by making taxation more uniform yet adding a small increase to the final
               cost. Understanding its impact helps you plan purchases better.
             </p>
             <ul className="list-disc pl-4 lg:pl-6 mb-2 text-blue-900 text-sm lg:text-base">
@@ -505,23 +438,23 @@ export default function ChennaiDesignPage() {
               <li className="mb-1"><strong>Overall Impact</strong> – You pay slightly more than the pre‑GST era, but pricing is more transparent and streamlined.</li>
             </ul>
             <p className="mb-3 text-blue-900 text-sm lg:text-base">
-              For example, if the gold rate in Chennai today is ₹6,000 per gram, adding GST and making charges could raise the
+              For example, if the gold rate in {city} today is ₹6,000 per gram, adding GST and making charges could raise the
               final jewellery price to ₹6,300–₹6,500 per gram depending on design.
             </p>
 
             <p className="mb-3 text-blue-900 text-sm lg:text-base">
               Whether you buy jewellery for tradition, invest in coins/bars, or choose digital formats, understanding the gold
-              rate in Chennai helps you make smarter financial decisions. Verify purity, and consider GST and making charges
+              rate in {city} helps you make smarter financial decisions. Verify purity, and consider GST and making charges
               before purchasing.
             </p>
 
-            <h4 className="text-blue-800 font-bold mt-2 lg:mt-3 mb-2 text-sm lg:text-base">Why Buy Gold Jewellery from BlueStone in Chennai?</h4>
+            <h4 className="text-blue-800 font-bold mt-2 lg:mt-3 mb-2 text-sm lg:text-base">Why Buy Gold Jewellery from BlueStone in {city}?</h4>
             <p className="mb-2 text-blue-900 text-sm lg:text-base">
-              BlueStone is a trusted destination for gold buyers in Chennai—combining trust, design and transparency.
+              BlueStone is a trusted destination for gold buyers—combining trust, design and transparency.
             </p>
             <ul className="list-disc pl-4 lg:pl-6 mb-0 text-blue-900 text-sm lg:text-base">
               <li className="mb-1"><strong>BIS‑Hallmarked Jewellery</strong> – Every product is certified so you get authentic gold at the best price.</li>
-              <li className="mb-1"><strong>Daily Updated Prices</strong> – Prices are aligned with Chennai’s live gold rate.</li>
+              <li className="mb-1"><strong>Daily Updated Prices</strong> – Prices are aligned with {city}’s live gold rate.</li>
               <li className="mb-1"><strong>Lifetime Exchange & Buyback</strong> – Facilities that make your buying experience secure and hassle‑free.</li>
               <li className="mb-1"><strong>Unique Designs</strong> – Thousands of exquisite styles for weddings and everyday wear.</li>
               <li className="mb-1"><strong>Flexible Payment Options</strong> – EMI plans and exciting festive offers.</li>
@@ -529,22 +462,75 @@ export default function ChennaiDesignPage() {
           </section>
         </div>
 
-          {/* FAQ */}
-        <div className="w-full px-2 lg:px-4 py-1 lg:py-2">
-          <FAQAccordion cityName="Chennai" price22k={latestChennai.price_22k} price24k={latestChennai.price_24k} />
+        {/* FAQ */}
+        <div className="w-full px-0 lg:px-0 py-1 lg:py-2">
+          <FAQAccordion cityName={city} price22k={latest22k} price24k={latest24k} />
         </div>
-        </main>
+      </main>
 
-        {/* Interlinking: Gold Rate Links */}
-        <InterlinkingLinks />
-
-        {/* Sidebar - Moved to bottom */}
-        <aside className="w-full bg-white border-t border-blue-200 py-0 lg:py-0 px-0 lg:px-0">
-          {/* Navigation component removed */}
-        </aside>
-
-      {/* Footer */}
+      <InterlinkingLinks />
       <Footer />
     </div>
   );
-} 
+}
+
+export async function getStaticPaths() {
+  const dataDir = path.join(process.cwd(), 'data', 'cities');
+  const files = fs.readdirSync(dataDir).filter((f) => f.endsWith('.json'));
+  const paths = files.map((f) => ({ params: { city: f.replace(/\.json$/, '') } }));
+  return { paths, fallback: false };
+}
+
+export async function getStaticProps({ params }: { params: { city: string } }) {
+  const cityParam = params.city;
+  const dataDir = path.join(process.cwd(), 'data', 'cities');
+  let filePath = path.join(dataDir, `${cityParam}.json`);
+  
+  // Try underscore version if dash version doesn't exist
+  if (!fs.existsSync(filePath)) {
+    const underscoreParam = cityParam.replace(/-/g, '_');
+    const underscoreFilePath = path.join(dataDir, `${underscoreParam}.json`);
+    if (fs.existsSync(underscoreFilePath)) {
+      filePath = underscoreFilePath;
+    } else {
+      return { notFound: true };
+    }
+  }
+  // Read and clean JSON data, handle NaN values
+  const rawText = fs.readFileSync(filePath, 'utf-8');
+  const cleanedText = rawText.replace(/:\s*NaN/g, ': null');
+  const raw = JSON.parse(cleanedText) as CityRecord[];
+  const first: any = raw.length ? (raw as any)[0] : null;
+  const cityName = first && first['city_name'] ? String(first['city_name']) : cityParam.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  const stateName = cityBelongsToState(cityName);
+  const mapped = raw
+    .filter((d) => d.date && typeof d['22k'] === 'number' && typeof d['24k'] === 'number' && !isNaN(d['22k']) && !isNaN(d['24k']))
+    .map((d) => ({ date: d.date, price_22k: d['22k'], price_24k: d['24k'] }));
+  const last10 = mapped.slice(-10).map((d) => ({
+    date: new Date(d.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+    price_22k: d.price_22k,
+    price_24k: d.price_24k,
+  })).reverse();
+
+  const latest = mapped[mapped.length - 1];
+  const series = mapped.slice(-90);
+  // Load BlueStone unified price
+  const blueRaw = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'data', 'bluestone.json'), 'utf-8')) as any;
+  const blue22k = Number(blueRaw['22k'] || 0);
+  const blue24k = Number(blueRaw['24k'] || 0);
+
+  return {
+    props: {
+      city: cityName,
+      state: stateName,
+      last10,
+      latest22k: latest.price_22k,
+      latest24k: latest.price_24k,
+      series,
+      blue22k,
+      blue24k,
+    },
+  };
+}
+
+

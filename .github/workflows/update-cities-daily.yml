@@ -1,0 +1,47 @@
+name: Update gold city data daily
+
+on:
+  schedule:
+    # Runs daily at 00:00 UTC (05:30 IST). Adjust as needed.
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Fetch all cities data for today
+        env:
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+        run: |
+          python Python_Scripts/fetch_all_cities_today.py
+
+      - name: Configure Git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit and push changes if any
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git add data/cities/*.json
+            git commit -m "chore(data): daily city prices update [skip ci]"
+            git push
+          else
+            echo "No changes to commit"
+          fi
+
+

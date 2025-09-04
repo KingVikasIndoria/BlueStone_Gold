@@ -6,9 +6,10 @@ interface TempGoldCalculatorProps {
   price24k: number;
   city: string;
   t?: (key: string) => string; // Optional translation function
+  showCityInHeading?: boolean;
 }
 
-export default function TempGoldCalculator({ price22k, price24k, city, t }: TempGoldCalculatorProps) {
+export default function TempGoldCalculator({ price22k, price24k, city, t, showCityInHeading = true }: TempGoldCalculatorProps) {
   const [grams, setGrams] = useState('');
   const [purity, setPurity] = useState<'18k' | '22k' | '24k'>('22k');
   const [makingCharges, setMakingCharges] = useState('');
@@ -84,7 +85,7 @@ export default function TempGoldCalculator({ price22k, price24k, city, t }: Temp
           <svg className="w-5 h-5" style={{ color: '#032d5f' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
           </svg>
-          <h3 className="text-lg font-bold" style={{ color: '#032d5f' }}>Gold Price Calculator - Chennai</h3>
+          <h3 className="text-lg font-bold" style={{ color: '#032d5f' }}>Gold Price Calculator{showCityInHeading && city ? ` - ${city}` : ''}</h3>
         </div>
 
         <div className="space-y-3">
@@ -203,7 +204,7 @@ export default function TempGoldCalculator({ price22k, price24k, city, t }: Temp
           <svg className="w-6 h-6" style={{ color: '#032d5f' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
           </svg>
-          <h3 className="text-xl font-bold" style={{ color: '#032d5f' }}>Gold Price Calculator - Chennai</h3>
+          <h3 className="text-xl font-bold" style={{ color: '#032d5f' }}>Gold Price Calculator{showCityInHeading && city ? ` - ${city}` : ''}</h3>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

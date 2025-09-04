@@ -9,6 +9,21 @@
   directory = "netlify/functions"
 
 [[redirects]]
+  from = "/gold-rate.html"
+  to = "/gold-rate/"
+  status = 200
+
+[[redirects]]
+  from = "/gold-rate/:state.html"
+  to = "/states/:state/"
+  status = 200
+
+[[redirects]]
+  from = "/gold-rates/:city.html"
+  to = "/cities/:city/"
+  status = 200
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200

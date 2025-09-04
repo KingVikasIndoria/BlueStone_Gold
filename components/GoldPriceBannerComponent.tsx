@@ -172,7 +172,7 @@ const GoldPriceBannerComponent: React.FC<GoldPriceBannerProps> = ({ mobileStyle 
         {/* Gold Price Card - 60% width, 50% height */}
         <div className="w-full bg-white rounded-lg shadow-lg border border-gray-200 p-6">
           <div className="grid grid-cols-2 gap-x-4 gap-y-1 mb-4 items-start">
-            <h2 className="text-[12px] lg:text-lg font-bold text-blue-900 col-span-1">Gold Rate in {cityName}</h2>
+            <h2 className="text-[13px] lg:text-[18px] font-bold text-blue-900 col-span-1">Gold Rate in {cityName}</h2>
             <span className="bg-green-100 text-green-900 px-2.5 py-1 rounded-full flex items-center font-medium text-sm justify-self-end col-span-1">
               <svg className="w-3 h-3 lg:w-4 lg:h-4 mr-1 text-green-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3" /><circle cx="12" cy="12" r="10" /></svg>
               Live Rates

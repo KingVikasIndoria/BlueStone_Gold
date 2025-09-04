@@ -23,6 +23,7 @@ export default function Header() {
             storeLink.setAttribute('data-bound', '1');
             storeLink.setAttribute('role', 'link');
             storeLink.style.cursor = 'pointer';
+            try { storeLink.removeAttribute('onclick'); } catch (_) {}
             storeLink.addEventListener('click', function (e) {
               e.preventDefault();
               try {

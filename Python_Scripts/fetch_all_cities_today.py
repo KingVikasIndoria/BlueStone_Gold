@@ -2,11 +2,20 @@ import http.client
 import json
 import os
 import time
+import sys
 from datetime import datetime
+
+# Ensure stdout/stderr can print Unicode on Windows terminals
+try:
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+
+    sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+except Exception:
+    pass
 
 # API configuration
 API_HOST = "gold-silver-live-price-india.p.rapidapi.com"
-API_KEY = os.getenv("RAPIDAPI_KEY", "")
+API_KEY = os.getenv("RAPIDAPI_KEY", "")  # better for security
 if not API_KEY:
     raise RuntimeError("RAPIDAPI_KEY environment variable is not set")
 
@@ -42,12 +51,9 @@ def _normalize_city_to_filename(city_name: str) -> str:
 def update_city_json(city_name, price_data, max_days: int = 90):
     """Append/replace today's data in the city's JSON and keep a rolling window of max_days (default 90)."""
     try:
-        # Create data directory if it doesn't exist
         os.makedirs("data/cities", exist_ok=True)
-        
         json_file_path = f"data/cities/{_normalize_city_to_filename(city_name)}.json"
         
-        # Prepare today's record
         today_iso = datetime.now().strftime("%Y-%m-%d")
         now_ts = datetime.now().isoformat()
         today_data = {
@@ -60,7 +66,6 @@ def update_city_json(city_name, price_data, max_days: int = 90):
             "status_code": price_data.get("Status_code")
         }
         
-        # Load existing
         records = []
         if os.path.exists(json_file_path):
             try:
@@ -69,10 +74,9 @@ def update_city_json(city_name, price_data, max_days: int = 90):
                     if isinstance(loaded, list):
                         records = loaded
             except Exception:
-                # If corrupt or empty, start fresh
                 records = []
         
-        # Replace existing record for today, if any
+        # Replace today's record if exists, else append
         replaced = False
         for idx, rec in enumerate(records):
             if rec.get("date") == today_iso:
@@ -82,15 +86,11 @@ def update_city_json(city_name, price_data, max_days: int = 90):
         if not replaced:
             records.append(today_data)
         
-        # Sort by date ascending, then trim to last max_days
-        try:
-            records.sort(key=lambda r: r.get("date", ""))
-        except Exception:
-            pass
+        # Keep only last max_days
+        records.sort(key=lambda r: r.get("date", ""))
         if len(records) > max_days:
             records = records[-max_days:]
         
-        # Write back
         with open(json_file_path, 'w', encoding='utf-8') as f:
             json.dump(records, f, indent=2, ensure_ascii=False)
             
@@ -100,36 +100,11 @@ def update_city_json(city_name, price_data, max_days: int = 90):
         print(f"Error writing JSON for {city_name}: {str(e)}")
         return False
 
-def trim_all_cities_to_last_n_days(n: int = 90):
-    """One-off maintenance: trim all city JSON files to last n days."""
-    base = "data/cities"
-    if not os.path.isdir(base):
-        print("data/cities not found; skipping trim.")
-        return
-    for fname in os.listdir(base):
-        if not fname.endswith('.json'):
-            continue
-        fpath = os.path.join(base, fname)
-        try:
-            with open(fpath, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-            if not isinstance(data, list):
-                continue
-            data.sort(key=lambda r: r.get('date', ''))
-            if len(data) > n:
-                data = data[-n:]
-            with open(fpath, 'w', encoding='utf-8') as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
-            print(f"Trimmed {fname} to last {n} days")
-        except Exception as e:
-            print(f"Failed trimming {fname}: {e}")
-
 def main():
-    """Main function to process all cities"""
-    print("Starting to fetch gold prices for all cities...")
+    """Main function to process cities from a text file"""
+    print("Starting to fetch gold prices for cities...")
     print(f"Current time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     
-    # Read cities from the text file
     try:
         with open("cities_list.txt", "r", encoding="utf-8") as f:
             cities = [line.strip() for line in f if line.strip()]
@@ -145,23 +120,21 @@ def main():
     for i, city in enumerate(cities, 1):
         print(f"[{i}/{len(cities)}] Processing: {city}")
         
-        # Fetch price data
         price_data = fetch_city_price(city)
         
         if price_data and price_data.get("Status_code") == 200:
-            # Update JSON file (roll window to 90 days)
             if update_city_json(city, price_data, max_days=90):
-                print(f"✓ {city}: 22K={price_data.get(f'{city}_22k')}, 24K={price_data.get(f'{city}_24k')}")
+                # Avoid special glyphs that can break Windows console encodings
+                print(f"OK {city}: 22K={price_data.get(f'{city}_22k')}, 24K={price_data.get(f'{city}_24k')}")
                 successful += 1
             else:
-                print(f"✗ {city}: Failed to write JSON")
+                print(f"ERR {city}: Failed to write JSON")
                 failed += 1
         else:
-            print(f"✗ {city}: No data or API error")
+            print(f"ERR {city}: No data or API error")
             failed += 1
         
-        # Rate limiting - wait 1 second between requests
-        time.sleep(1)
+        time.sleep(3)  # pause between requests
     
     print(f"\n=== SUMMARY ===")
     print(f"Total cities processed: {len(cities)}")

@@ -72,6 +72,7 @@ interface TempNearbyCitiesProps {
   base22k: number;
   base24k: number;
   cityDisplayName: string;
+  isStatePage?: boolean;
 }
 
 function randomPrice(base: number) {
@@ -80,7 +81,7 @@ function randomPrice(base: number) {
   return Math.round(base * percent);
 }
 
-const TempNearbyCities: React.FC<TempNearbyCitiesProps> = ({ currentCity, currentState, base22k, base24k, cityDisplayName }) => {
+const TempNearbyCities: React.FC<TempNearbyCitiesProps> = ({ currentCity, currentState, base22k, base24k, cityDisplayName, isStatePage = false }) => {
   const [hydrated, setHydrated] = useState(false);
   const [rows, setRows] = useState<{ name: string, key: string, price18k: number, price22k: number, price24k: number }[]>([]);
 
@@ -111,7 +112,9 @@ const TempNearbyCities: React.FC<TempNearbyCitiesProps> = ({ currentCity, curren
   if (!rows.length) return null;
   return (
     <>
-      <h3 className="text-blue-900 font-bold text-lg mb-3">Gold rate in nearby cities of {cityDisplayName}</h3>
+      <h3 className="text-blue-900 font-bold text-lg mb-3">
+        {isStatePage ? `Gold rate in the cities of ${currentState}` : `Gold rate in nearby cities of ${cityDisplayName}`}
+      </h3>
       <div className="overflow-x-auto">
         <table className="min-w-full text-sm border border-blue-100 rounded-lg">
           <thead>

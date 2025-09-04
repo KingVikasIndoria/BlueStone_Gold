@@ -25,10 +25,10 @@ function formatINR(n: number) {
   return '₹' + n.toLocaleString('en-IN');
 }
 
-const TempHistoricalMonthlyTable: React.FC = () => {
+const TempHistoricalMonthlyTable: React.FC<{ cityName: string }> = ({ cityName }) => {
   return (
     <>
-      <h3 className="text-blue-900 font-bold text-sm lg:text-lg mb-2 lg:mb-3">Historical Gold Rate in Bangalore</h3>
+      <h3 className="text-blue-900 font-bold text-sm lg:text-lg mb-2 lg:mb-3">Historical Gold Rate in {cityName}</h3>
       <div className="overflow-x-auto overflow-y-auto max-h-80">
         <table className="min-w-full text-xs lg:text-sm border border-blue-100 rounded-lg">
           <thead>

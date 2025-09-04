@@ -20,11 +20,11 @@ function getChange(curr: number, prev: number) {
   };
 }
 
-const TempLast10DaysTable: React.FC<{ data: TableRow[] }> = ({ data }) => {
+const TempLast10DaysTable: React.FC<{ data: TableRow[]; cityName: string }> = ({ data, cityName }) => {
   const rows = data;
   return (
     <>
-      <h3 className="text-blue-900 font-bold text-sm lg:text-lg mb-2 lg:mb-3">Gold Rate in Chennai for Last 10 days</h3>
+      <h3 className="text-blue-900 font-bold text-sm lg:text-lg mb-2 lg:mb-3">Gold Rate in {cityName} for Last 10 days</h3>
       <div className="overflow-x-auto overflow-y-auto h-full">
         <table className="min-w-full text-xs lg:text-sm border border-blue-100 rounded-lg">
           <thead>
